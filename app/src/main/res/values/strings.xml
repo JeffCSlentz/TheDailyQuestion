@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Daily Question</string>
+    <string name="action_settings">Settings</string>
+    <string name="add_Q_button">+</string>
+    <string name="get_question">Your Question</string>
+
+    <string-array name="question_List">
+    </string-array>
+</resources>
