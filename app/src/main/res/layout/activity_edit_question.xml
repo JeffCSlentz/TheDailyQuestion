@@ -29,6 +29,32 @@
             android:id="@+id/write_question_text"
             android:inputType="textCapSentences" />
 
+        <TextView
+            android:text="Answer Format:"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:id="@+id/answer_options_title" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/answer_option_list"
+            android:minHeight="45dp" />
+
+        <Button
+            android:text="Choose time to be asked"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/show_time_picker_button"
+            android:onClick="showTimePickerDialog"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/question_time_title"
+            android:gravity="center" />
+
     </LinearLayout>
 
     <LinearLayout
