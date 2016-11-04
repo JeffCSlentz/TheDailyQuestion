@@ -5,7 +5,10 @@
     <string name="add_Q_button">+</string>
     <string name="get_question">Your Question</string>
     <string name="num_questions">numQ</string>
-
+    <string name="questionID">questionID</string>
+    <string name="delete">Delete Question?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
     <string-array name="question_List"></string-array>
 

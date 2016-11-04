@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -18,8 +20,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements LongClickQuestionFragment.OnCompleteListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,19 +28,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        /*Intent intent = getIntent();
-        String question = intent.getStringExtra(EditQuestionActivity.QUESTION_TEXT);
-        if (question != null){
-            questionList.add(question);
-        }
-
-        if (!questionList.isEmpty()){
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, questionList);
-            ListView listview = (ListView) findViewById(R.id.questionList);
-            listview.setAdapter(adapter);
-        }*/
 
         populateQuestionList();
     }
@@ -83,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     //Starts the EditQuestion Activity
     public void addQuestion(){
         Intent intent = new Intent(this, EditQuestionActivity.class);
-        intent.putExtra("QUESTION_NUMBER", "-1");
+        intent.putExtra(this.getString(R.string.questionID), "-1");
         startActivity(intent);
     }
 
@@ -91,13 +79,12 @@ public class MainActivity extends AppCompatActivity {
     public void populateQuestionList(){
         ArrayList<Question> questionList = new ArrayList<Question>();
 
-        //SharedPreferences sharedPref = getSharedPreferences("Questions", MODE_PRIVATE);
-
-        int numQuestions = PrefsAccessor.getNumberOfQuestions(this);
+        PrefsAccessor prefs = new PrefsAccessor(this);
+        int numQuestions = prefs.getNumberOfQuestions();
 
         if (numQuestions > 0){
             for(int i =0; i < numQuestions; i++){
-                Question q = PrefsAccessor.loadQuestion(this, i);
+                Question q = prefs.loadQuestion(String.valueOf(i));
                 questionList.add(q);
             }
         }
@@ -109,36 +96,10 @@ public class MainActivity extends AppCompatActivity {
         listView.setAdapter(qAdapter);
 
     }
-    /*
-    public void editQuestion(View view){
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.add_Q);
 
-    }*/
+    public void onComplete(){
+        populateQuestionList();
+    }
+
 }
 
-/*
-qList = "1,2,3,4,5,6,7"
-
-Sharedpref "Questions"
-    numQ = integer telling how many questions are in shared pref
-    q1 = string object for question 1
-    q2 = string object for question 2
-    qn = string object for question n ... etc
-
-
-What I want
-{"employees":[
-    {"firstName":"John", "lastName":"Doe"},
-    {"firstName":"Anna", "lastName":"Smith"},
-    {"firstName":"Peter", "lastName":"Jones"}
-]}
-
-What I have
-
-{"q1":{"question":"Whats up fam?"}, "answerformat":"etc"}}
-{"q2":{"question":"Whats up fam?"}, "answerformat":"etc"}}
-
-
-
-    */

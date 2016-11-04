@@ -12,6 +12,7 @@ public class Question implements Serializable{
     private String questionTimeHour;
     private String questionTimeMinute;
     private String questionAmPM = "AM";
+    private String questionID;
 
     public Question(){
 
@@ -27,6 +28,9 @@ public class Question implements Serializable{
     }
     public String getQuestionTimeHour() { return questionTimeHour; }
     public String getQuestionTimeMinute() { return questionTimeMinute; }
+    public String getQuestionID() { return questionID; }
+    public Integer getQuestionIDasInt() { return Integer.parseInt(questionID); }
+    public String getAnswerFormat() { return answerFormat; }
 
 
     //setters
@@ -45,5 +49,13 @@ public class Question implements Serializable{
             m = "00";
         }
         questionTimeMinute = m;
+    }
+    public void setQuestionID(Object ID) {
+        assert (ID instanceof String || ID instanceof Integer);
+        if (ID instanceof String) {
+            questionID = String.valueOf(ID);
+        } else {
+            questionID = ID.toString();
+        }
     }
 }

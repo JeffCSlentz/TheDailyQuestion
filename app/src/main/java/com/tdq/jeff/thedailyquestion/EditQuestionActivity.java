@@ -28,31 +28,25 @@ public class EditQuestionActivity extends AppCompatActivity implements TimePicke
         setContentView(R.layout.activity_edit_question);
 
         Intent intent = getIntent();
-        qNum = intent.getStringExtra("QUESTION_NUMBER");
+        qNum = intent.getStringExtra(this.getString(R.string.questionID));
+        q.setQuestionID(qNum);
+
 
         if (!qNum.equals("-1")){
             Log.i("Editing question number", qNum);
             loadQuestion();
-            updateTextFields();
+            updateFields();
+
         }
-
-        //Create the spinner list from pre-defined list
-        Spinner spinner = (Spinner) findViewById(R.id.answer_option_list);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.answer_Options, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-
+        loadSpinner(qNum);
     }
 
     private void loadQuestion() {
-        Integer qNumInt = Integer.parseInt(qNum);
-        q = PrefsAccessor.loadQuestion(this, qNumInt);
-
+        PrefsAccessor prefs = new PrefsAccessor(this);
+        q = prefs.loadQuestion(qNum);
     }
 
-    private void updateTextFields() {
+    private void updateFields() {
         TextView qText = (TextView) findViewById(R.id.write_question_text);
         qText.setText(q.getQuestion());
     }
@@ -73,10 +67,14 @@ public class EditQuestionActivity extends AppCompatActivity implements TimePicke
         q.setAnswerFormat(answerFormat);
 
 
-        Integer qNumInt = Integer.parseInt(qNum);
+        //Integer qNumInt = Integer.parseInt(qNum);
+        q.setQuestionID(qNum);
 
+        PrefsAccessor prefs = new PrefsAccessor(this);
+        prefs.saveQuestion(q);
 
-        PrefsAccessor.saveQuestion(this, q, qNumInt);
+        Alarm alarm = new Alarm(this);
+        alarm.setAlarm(q);
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
@@ -106,5 +104,23 @@ public class EditQuestionActivity extends AppCompatActivity implements TimePicke
     public void updateQuestionTime(){
         TextView qText = (TextView) findViewById(R.id.question_time_title);
         qText.setText("Question will be asked at " + q.getQuestionTimeHour() + ":" + q.getQuestionTimeMinute());
+    }
+    private void loadSpinner(String qNum) {
+        Spinner spinner = (Spinner) findViewById(R.id.answer_option_list);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.answer_Options, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        if(!qNum.equals("-1")){
+            switch(q.getAnswerFormat()){
+                case "Yes or No": spinner.setSelection(0, false);
+                    break;
+                case "Rating Scale": spinner.setSelection(1, false);
+                    break;
+                case "Multiple Choice": spinner.setSelection(2, false);
+            }
+        }
+
+        spinner.setAdapter(adapter);
     }
 }

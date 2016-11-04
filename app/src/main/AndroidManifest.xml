@@ -18,7 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditQuestionActivity"></activity>
+        <activity android:name=".EditQuestionActivity" />
+        <activity android:name=".AnswerQuestion"></activity>
+
+        <receiver android:name=".NotifyReceiver" >
+        </receiver>
     </application>
 
 </manifest>
