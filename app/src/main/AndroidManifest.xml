@@ -19,10 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".EditQuestionActivity" />
-        <activity android:name=".AnswerQuestion"></activity>
+        <activity android:name=".AnswerQuestion" />
 
-        <receiver android:name=".NotifyReceiver" >
-        </receiver>
+        <receiver android:name=".NotifyReceiver"></receiver>
+
+        <activity android:name=".SettingsActivity"></activity>
     </application>
 
 </manifest>

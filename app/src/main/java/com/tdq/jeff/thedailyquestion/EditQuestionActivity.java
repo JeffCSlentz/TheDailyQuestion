@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 
 
-public class EditQuestionActivity extends AppCompatActivity implements TimePickerFragment.OnCompleteListener {
+public class EditQuestionActivity extends AppCompatActivity  implements TimePickerFragment.OnCompleteListener {
 
     public final static String QUESTION_TEXT = "";
     public final static String ACTIVITY = "EditQuestionActivity";
@@ -43,7 +43,12 @@ public class EditQuestionActivity extends AppCompatActivity implements TimePicke
 
     private void loadQuestion() {
         PrefsAccessor prefs = new PrefsAccessor(this);
-        q = prefs.loadQuestion(qNum);
+        try{
+            q = prefs.loadQuestion(qNum);
+        }
+        catch (Exception e){
+            System.out.println("Question load failed in EditQuestionActivity.loadQuestion: " + e.getMessage());
+        }
     }
 
     private void updateFields() {
@@ -93,6 +98,7 @@ public class EditQuestionActivity extends AppCompatActivity implements TimePicke
 
     }
 
+
     public void onComplete(String h, String m) {
         //After dialog fragment completes, this is called
         q.setQuestionTimeHour(h);
@@ -101,10 +107,14 @@ public class EditQuestionActivity extends AppCompatActivity implements TimePicke
         updateQuestionTime();
     }
 
+
     public void updateQuestionTime(){
         TextView qText = (TextView) findViewById(R.id.question_time_title);
         qText.setText("Question will be asked at " + q.getQuestionTimeHour() + ":" + q.getQuestionTimeMinute());
     }
+
+
+
     private void loadSpinner(String qNum) {
         Spinner spinner = (Spinner) findViewById(R.id.answer_option_list);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

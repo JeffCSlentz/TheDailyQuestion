@@ -19,6 +19,10 @@ import android.widget.ListView;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class MainActivity extends AppCompatActivity implements LongClickQuestionFragment.OnCompleteListener {
 
@@ -62,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements LongClickQuestion
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            startActivity(new Intent(this, SettingsActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -77,16 +81,42 @@ public class MainActivity extends AppCompatActivity implements LongClickQuestion
 
     //Reads from sharedpreferences and adds each question to the list.
     public void populateQuestionList(){
-        ArrayList<Question> questionList = new ArrayList<Question>();
 
         PrefsAccessor prefs = new PrefsAccessor(this);
-        int numQuestions = prefs.getNumberOfQuestions();
+        Set<String> questions = new TreeSet<>();
+        questions = prefs.getAllQuestions();
 
+        ArrayList<String> questionListofIDs = new ArrayList<>(questions);
+        Collections.sort(questionListofIDs);
+
+        ArrayList<Question> questionList = new ArrayList<Question>();
+
+        Iterator itr = questionListofIDs.iterator();
+
+
+        int numQuestions = prefs.getNumberOfQuestions();
         if (numQuestions > 0){
+            while (itr.hasNext()){
+                String qID = String.valueOf(itr.next());
+
+                Question q = null;
+
+                try{
+                    q = prefs.loadQuestion(qID);
+                }
+                catch (Exception e){
+                    System.out.println("Question load Failed in MainActivity.populateQuestionList: " + e.getMessage());
+                }
+
+
+                questionList.add(q);
+            }
+            /*
             for(int i =0; i < numQuestions; i++){
                 Question q = prefs.loadQuestion(String.valueOf(i));
                 questionList.add(q);
             }
+            */
         }
 
 

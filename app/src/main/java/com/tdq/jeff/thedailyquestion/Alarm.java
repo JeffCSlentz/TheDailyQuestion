@@ -31,6 +31,8 @@ public class Alarm {
         Intent intent = new Intent(mContext, NotifyReceiver.class);
         intent.putExtra(r.getString(R.string.questionID), q.getQuestionID());
 
+
+        //Sets a broadcast for the future with questionID as ID.
         PendingIntent pi = PendingIntent.getBroadcast(mContext, Integer.parseInt(q.getQuestionID()), intent, 0);
 
 
@@ -43,6 +45,7 @@ public class Alarm {
 
         System.out.println(calendar.get(Calendar.HOUR_OF_DAY)+ " " + calendar.get(Calendar.MINUTE) + " " + calendar.get(Calendar.SECOND));
 
+        //Sets the pending intent w/ Broadcast in the alarm manager.
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pi);
     }
 

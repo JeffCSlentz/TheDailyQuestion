@@ -42,13 +42,14 @@
             android:id="@+id/answer_option_list"
             android:minHeight="45dp" />
 
+        <!--  This was when the time picker fragment was in edit question
         <Button
             android:text="Choose time to be asked"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/show_time_picker_button"
             android:onClick="showTimePickerDialog"/>
-
+        -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
