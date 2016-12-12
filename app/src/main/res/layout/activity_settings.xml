@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.tdq.jeff.thedailyquestion.SettingsActivity">
+    tools:context="com.tdq.jeff.thedailyquestion.Settings.SettingsActivity">
 
     <Button
         android:text="Choose time to answer questions"

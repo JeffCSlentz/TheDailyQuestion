@@ -16,7 +16,6 @@ import com.tdq.jeff.thedailyquestion.MainActivity.MainActivity;
 import com.tdq.jeff.thedailyquestion.PrefsAccessor;
 import com.tdq.jeff.thedailyquestion.Question;
 import com.tdq.jeff.thedailyquestion.R;
-import com.tdq.jeff.thedailyquestion.TimePickerFragment;
 
 
 public class EditQuestionActivity extends AppCompatActivity  implements TimePickerFragment.OnCompleteListener {

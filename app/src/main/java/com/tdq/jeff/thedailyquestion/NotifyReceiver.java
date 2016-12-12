@@ -1,6 +1,5 @@
 package com.tdq.jeff.thedailyquestion;
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -9,14 +8,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.NotificationCompat;
 
+import com.tdq.jeff.thedailyquestion.AnswerQuestion.AnswerQuestionActivity;
+
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Set;
 
-import static android.content.Context.ALARM_SERVICE;
 import static android.content.Context.NOTIFICATION_SERVICE;
 
 /**
@@ -24,40 +22,38 @@ import static android.content.Context.NOTIFICATION_SERVICE;
  */
 
 public class NotifyReceiver extends BroadcastReceiver{
-    Question q;
 
     public void onReceive(Context context, Intent intent) {
-
         System.out.println("NotifyReceiver called onReceive");
 
-        Resources r = context.getResources();
+        Resources resources = context.getResources();
 
         //Load question
         PrefsAccessor prefs = new PrefsAccessor(context);
 
-        Question q = null;
+        Question question = null;
         try{
-            q = prefs.loadQuestion(intent.getStringExtra(r.getString(R.string.questionID)));
+            question = prefs.loadQuestion(intent.getStringExtra(resources.getString(R.string.questionID)));
         }
         catch(Exception e){
             System.out.println("Load Failed in NotifyReceiver.onReceive: " + e.getMessage());
         }
-        receiveNotification(context, q);
+        receiveNotification(context, question);
     }
 
-    private void receiveNotification(Context c, Question q){
+    private void receiveNotification(Context context, Question question){
 
-        PrefsAccessor prefs = new PrefsAccessor(c);
+        PrefsAccessor prefs = new PrefsAccessor(context);
 
         //Add question to the saved set of qNotifications, then load it.
-        prefs.addqNotification(q);
+        prefs.addqNotification(question);
         Set<String> qNotifications = prefs.getqNotifications();
 
         //If the set has only one question in it, build a notification
         //that will have the question text in it.
-        Notification notification = buildNotification(c, qNotifications);
+        Notification notification = buildNotification(context, qNotifications);
 
-        sendNotification(c, notification);
+        sendNotification(context, notification);
     }
     public void sendNotification(Context context, Notification notification){
 
@@ -75,11 +71,6 @@ public class NotifyReceiver extends BroadcastReceiver{
         }
         Notification notification = buildNotification(context, qNotifications);
 
-
-
-
-
-
         sendNotification(context, notification);
     }
 
@@ -89,21 +80,22 @@ public class NotifyReceiver extends BroadcastReceiver{
         Resources r = context.getResources();
 
         //Convert set to list for intent.putExtra
-        ArrayList<String> list = new ArrayList<>(qNotifications);
+        ArrayList<String> qNotificationsList = new ArrayList<>(qNotifications);
 
         //Build the intent
-        Intent intent = new Intent(context, AnswerQuestion.class);
+        Intent intent = new Intent(context, AnswerQuestionActivity.class);
 
-        //Attach list of notifications for AnswerQuestion Activity
-        intent.putExtra("qNotifications", list);
+        //Attach list of notifications for AnswerQuestionActivity Activity
+        intent.putExtra("qNotifications", qNotificationsList);
 
         //Set target activity that will be launched
         PendingIntent pi = PendingIntent.getActivity(context, 0, intent, 0);
 
 
-        if (qNotifications.size() == 1){
+        String notificationText;
 
-            String questionString = list.get(0);
+        if (qNotifications.size() == 1){
+            String questionString = qNotificationsList.get(0);
 
             PrefsAccessor prefs = new PrefsAccessor(context);
 
@@ -114,29 +106,22 @@ public class NotifyReceiver extends BroadcastReceiver{
             catch(Exception e){
                 System.out.println("Load Failed in NotifyReceiver.buildNotification: " + e.getMessage());
             }
-
-            notification = new NotificationCompat.Builder(context)
-                    .setTicker(r.getString(R.string.app_name))
-                    .setSmallIcon(android.R.drawable.ic_menu_report_image)
-                    .setContentTitle(r.getString(R.string.app_name))
-                    .setContentText(q.getQuestion())
-                    .setContentIntent(pi)
-                    .setAutoCancel(true)
-                    //.addAction(android.R.drawable.ic_menu_report_image, "Answer", pi)
-                    .build();
+            notificationText = q.getQuestion();
         }
         //Otherwise, send a notification with the number of questions.
         else{
-            notification = new NotificationCompat.Builder(context)
-                    .setTicker(r.getString(R.string.app_name))
-                    .setSmallIcon(android.R.drawable.ic_menu_report_image)
-                    .setContentTitle(r.getString(R.string.app_name))
-                    .setContentText(qNotifications.size() + " questions are awaiting an answer.")
-                    .setContentIntent(pi)
-                    .setAutoCancel(true)
-                    //.addAction(android.R.drawable.ic_menu_report_image, "Answer", pi)
-                    .build();
+            notificationText = qNotifications.size() + " questions are awaiting an answer.";
         }
+
+        notification = new NotificationCompat.Builder(context)
+                .setTicker(r.getString(R.string.app_name))
+                .setSmallIcon(android.R.drawable.ic_menu_report_image)
+                .setContentTitle(r.getString(R.string.app_name))
+                .setContentText(notificationText)
+                .setContentIntent(pi)
+                .setAutoCancel(true)
+                //.addAction(android.R.drawable.ic_menu_report_image, "Answer", pi)
+                .build();
 
         return notification;
     }

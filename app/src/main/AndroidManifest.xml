@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".MainActivity.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -18,12 +18,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".EditQuestionActivity" />
-        <activity android:name=".AnswerQuestion" />
+        <activity android:name=".EditQuestion.EditQuestionActivity" />
+        <activity android:name=".AnswerQuestion.AnswerQuestionActivity" />
 
         <receiver android:name=".NotifyReceiver"></receiver>
 
-        <activity android:name=".SettingsActivity"></activity>
+        <activity android:name=".Settings.SettingsActivity"></activity>
     </application>
 
 </manifest>
