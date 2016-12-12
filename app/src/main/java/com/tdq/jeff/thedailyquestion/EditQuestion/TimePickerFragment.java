@@ -1,4 +1,4 @@
-package com.tdq.jeff.thedailyquestion;
+package com.tdq.jeff.thedailyquestion.EditQuestion;
 
         import android.app.Activity;
         import android.app.Dialog;

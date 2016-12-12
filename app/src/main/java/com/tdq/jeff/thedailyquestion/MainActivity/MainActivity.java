@@ -1,4 +1,4 @@
-package com.tdq.jeff.thedailyquestion;
+package com.tdq.jeff.thedailyquestion.MainActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
+import com.tdq.jeff.thedailyquestion.EditQuestionActivity;
+import com.tdq.jeff.thedailyquestion.LongClickQuestionFragment;
+import com.tdq.jeff.thedailyquestion.PrefsAccessor;
+import com.tdq.jeff.thedailyquestion.Question;
+import com.tdq.jeff.thedailyquestion.QuestionsAdapter;
+import com.tdq.jeff.thedailyquestion.R;
+import com.tdq.jeff.thedailyquestion.SettingsActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements LongClickQuestion
         Iterator itr = questionListofIDs.iterator();
 
 
+
         int numQuestions = prefs.getNumberOfQuestions();
         if (numQuestions > 0){
             while (itr.hasNext()){
@@ -111,12 +119,6 @@ public class MainActivity extends AppCompatActivity implements LongClickQuestion
 
                 questionList.add(q);
             }
-            /*
-            for(int i =0; i < numQuestions; i++){
-                Question q = prefs.loadQuestion(String.valueOf(i));
-                questionList.add(q);
-            }
-            */
         }
 
 

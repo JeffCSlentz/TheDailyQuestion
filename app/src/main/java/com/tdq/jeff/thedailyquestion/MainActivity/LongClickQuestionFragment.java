@@ -1,15 +1,15 @@
-package com.tdq.jeff.thedailyquestion;
+package com.tdq.jeff.thedailyquestion.MainActivity;
 
-import android.app.Activity;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.app.DialogFragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
+import com.tdq.jeff.thedailyquestion.PrefsAccessor;
+import com.tdq.jeff.thedailyquestion.R;
 
 
 public class LongClickQuestionFragment extends DialogFragment {
@@ -47,8 +47,8 @@ public class LongClickQuestionFragment extends DialogFragment {
 
     }
 
-    public static interface OnCompleteListener{
-        public abstract void onComplete();
+    public interface OnCompleteListener{
+        void onComplete();
     }
 
 

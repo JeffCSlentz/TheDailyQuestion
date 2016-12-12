@@ -1,8 +1,7 @@
-package com.tdq.jeff.thedailyquestion;
+package com.tdq.jeff.thedailyquestion.EditQuestion;
 
 import android.app.DialogFragment;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
+import com.tdq.jeff.thedailyquestion.Alarm;
+import com.tdq.jeff.thedailyquestion.MainActivity.MainActivity;
+import com.tdq.jeff.thedailyquestion.PrefsAccessor;
+import com.tdq.jeff.thedailyquestion.Question;
+import com.tdq.jeff.thedailyquestion.R;
+import com.tdq.jeff.thedailyquestion.TimePickerFragment;
 
 
 public class EditQuestionActivity extends AppCompatActivity  implements TimePickerFragment.OnCompleteListener {
@@ -81,21 +85,20 @@ public class EditQuestionActivity extends AppCompatActivity  implements TimePick
         Alarm alarm = new Alarm(this);
         alarm.setAlarm(q);
 
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-
-        return;
+        returnToMainActivity();
     }
     public void cancelAddQuestion(View view){
+        returnToMainActivity();
+    }
+
+    public void returnToMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
-        return;
     }
 
     public void showTimePickerDialog(View v) {
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getFragmentManager(), "timepicker");
-
     }
 
 

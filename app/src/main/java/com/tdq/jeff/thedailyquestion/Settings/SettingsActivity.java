@@ -1,9 +1,13 @@
-package com.tdq.jeff.thedailyquestion;
+package com.tdq.jeff.thedailyquestion.Settings;
 
 import android.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.tdq.jeff.thedailyquestion.EditQuestion.TimePickerFragment;
+import com.tdq.jeff.thedailyquestion.PrefsAccessor;
+import com.tdq.jeff.thedailyquestion.R;
 
 public class SettingsActivity extends AppCompatActivity implements TimePickerFragment.OnCompleteListener {
 
@@ -24,6 +28,4 @@ public class SettingsActivity extends AppCompatActivity implements TimePickerFra
         PrefsAccessor prefs = new PrefsAccessor(this);
         prefs.setGlobalTime(h, m);
     }
-
-
 }

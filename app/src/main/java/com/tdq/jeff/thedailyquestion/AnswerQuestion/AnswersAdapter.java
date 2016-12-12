@@ -1,4 +1,4 @@
-package com.tdq.jeff.thedailyquestion;
+package com.tdq.jeff.thedailyquestion.AnswerQuestion;
 
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -12,15 +12,20 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.tdq.jeff.thedailyquestion.EditQuestion.EditQuestionActivity;
+import com.tdq.jeff.thedailyquestion.MainActivity.LongClickQuestionFragment;
+import com.tdq.jeff.thedailyquestion.Question;
+import com.tdq.jeff.thedailyquestion.R;
+
 import java.util.ArrayList;
 
 /**
  * Created by Jeff on 10/23/2016.
  */
 
-public class QuestionsAdapter extends ArrayAdapter<Question> {
-    Context mContext;
-    public QuestionsAdapter(Context context, ArrayList<Question> questions) {
+public class AnswersAdapter extends ArrayAdapter<Question> {
+    private Context mContext;
+    public AnswersAdapter(Context context, ArrayList<Question> questions) {
         super(context, 0, questions);
         mContext = context;
     }
