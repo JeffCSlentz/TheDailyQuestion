@@ -1,10 +1,14 @@
-# TheDailyQuestion
+# TheDailyQuestion - Unfinished
 App for discovering yourself
 
+# Functionality
 
+The app lets you add questions. It also sends you a notification daily to answer your questions.
 
-TODO: 
-Answer format should be preselected based on clicked question.
-Add exceptions around prefsaccessor methods. 
-Fill AnswerQuestion class with content. 
-Maybe figure out how to combine notifications if user wants multiple questions at the same time.
+![alt text](https://thumbs.gfycat.com/GraciousRightFairyfly-max-14mb.gif)
+![alt text](https://i.imgur.com/eIsCKBt.png)
+
+# TO DO
+
+Let the user answer questions and display statistics about their answers.
+
